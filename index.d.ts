@@ -3,9 +3,23 @@ import {
   Pool as PromisePool,
   PoolConnection as PromisePoolConnection
 } from './promise';
+import PoolConfig from './lib/pool_config.js';
 
 import * as mysql from './typings/mysql';
 export * from './typings/mysql';
+
+export interface writeOkParams {
+  affectedRows?: number;
+  insertId?: number;
+  serverStatus?: number;
+  warningCount?: number;
+  message?: string;
+}
+
+export interface writeErrorParams {
+  message?: string;
+  code?: number | string;
+}
 
 export interface Connection extends mysql.Connection {
   execute<
@@ -74,6 +88,13 @@ export interface Connection extends mysql.Connection {
   promise(promiseImpl?: PromiseConstructor): PromiseConnection;
   unprepare(sql: string): mysql.PrepareStatementInfo;
   prepare(sql: string, callback?: (err: mysql.QueryError | null, statement: mysql.PrepareStatementInfo) => any): mysql.Prepare;
+  serverHandshake(args: any): any;
+  writeOk(args?: writeOkParams): void;
+  writeError(args?: writeErrorParams): void;
+  writeEof(warnings?: number, statusFlags?: number): void;
+  writeTextResult(rows?: Array, columns?: Array): void;
+  writePacket(packet: any): void;
+  sequenceId: number;
 }
 
 export interface PoolConnection extends mysql.PoolConnection, Connection {
@@ -153,6 +174,8 @@ export interface Pool extends mysql.Connection {
   promise(promiseImpl?: PromiseConstructor): PromisePool;
   unprepare(sql: string): mysql.PrepareStatementInfo;
   prepare(sql: string, callback?: (err: mysql.QueryError | null, statement: mysql.PrepareStatementInfo) => any): mysql.Prepare;
+
+  config: PoolConfig;
 }
 
 type authPlugins = (pluginMetadata: {
