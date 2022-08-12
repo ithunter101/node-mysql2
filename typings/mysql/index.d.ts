@@ -10,7 +10,7 @@ import BaseQuery = require('./lib/protocol/sequences/Query');
 import BasePrepare = require('./lib/protocol/sequences/Prepare');
 import {QueryOptions, StreamOptions, QueryError} from './lib/protocol/sequences/Query';
 import {PrepareStatementInfo} from 'mysql2/typings/mysql/lib/protocol/sequences/Prepare';
-import Server from 'mysql2/typings/mysql/lib/Server';
+import Server = require('mysql2/typings/mysql/lib/Server');
 
 export function createConnection(connectionUri: string): Connection;
 export function createConnection(config: BaseConnection.ConnectionOptions): Connection;
