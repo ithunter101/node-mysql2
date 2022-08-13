@@ -44,5 +44,3 @@ export interface Pool extends BasePool {}
 export interface PoolCluster extends BasePoolCluster {}
 export interface Query extends BaseQuery {}
 export interface Prepare extends BasePrepare {}
-
-export function createServer(handler: (conn: BaseConnection) => any): Server;
