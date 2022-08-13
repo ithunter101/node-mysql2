@@ -1,6 +1,7 @@
 import { EventEmitter } from 'events';
 import Connection = require('./connection');
 
+
 declare namespace Server {}
 
 declare class Server extends EventEmitter {
