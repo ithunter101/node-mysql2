@@ -1,25 +1,11 @@
 import {
   Connection as PromiseConnection,
   Pool as PromisePool,
-  PoolConnection as PromisePoolConnection
+  PoolConnection as PromisePoolConnection,
 } from './promise';
-import PoolConfig from './lib/pool_config.js';
 
 import * as mysql from './typings/mysql';
 export * from './typings/mysql';
-
-export interface writeOkParams {
-  affectedRows?: number;
-  insertId?: number;
-  serverStatus?: number;
-  warningCount?: number;
-  message?: string;
-}
-
-export interface writeErrorParams {
-  message?: string;
-  code?: number | string;
-}
 
 export interface Connection extends mysql.Connection {
   execute<
@@ -89,10 +75,10 @@ export interface Connection extends mysql.Connection {
   unprepare(sql: string): mysql.PrepareStatementInfo;
   prepare(sql: string, callback?: (err: mysql.QueryError | null, statement: mysql.PrepareStatementInfo) => any): mysql.Prepare;
   serverHandshake(args: any): any;
-  writeOk(args?: writeOkParams): void;
-  writeError(args?: writeErrorParams): void;
+  writeOk(args?: mysql.OkPacketParams): void;
+  writeError(args?: mysql.ErrorPacketParams): void;
   writeEof(warnings?: number, statusFlags?: number): void;
-  writeTextResult(rows?: Array, columns?: Array): void;
+  writeTextResult(rows?: Array<any>, columns?: Array<any>): void;
   writePacket(packet: any): void;
   sequenceId: number;
 }
@@ -175,7 +161,7 @@ export interface Pool extends mysql.Connection {
   unprepare(sql: string): mysql.PrepareStatementInfo;
   prepare(sql: string, callback?: (err: mysql.QueryError | null, statement: mysql.PrepareStatementInfo) => any): mysql.Prepare;
 
-  config: PoolConfig;
+  config: mysql.PoolOptions;
 }
 
 type authPlugins = (pluginMetadata: {
