@@ -42,11 +42,6 @@ declare namespace Pool {
          * If keep-alive is enabled users can supply an initial delay.
          */
         keepAliveInitialDelay?: number;
-
-        /**
-         * Check if a server is a mysql server or proxy server 
-         */
-        isProxy?: boolean;
     }
 }
 
