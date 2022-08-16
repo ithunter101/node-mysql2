@@ -133,6 +133,11 @@ export interface Pool extends EventEmitter {
   on(event: 'enqueue', listener: () => any): this;
   end(): Promise<void>;
 
+  escape(value: any): string;
+  escapeId(value: string): string;
+  escapeId(values: string[]): string;
+  format(sql: string, values?: any | any[] | { [param: string]: any }): string;
+
   pool: CorePool;
 }
 
@@ -145,4 +150,8 @@ export function createPool(config: PoolOptions): Pool;
 export interface PreparedStatementInfo {
   close(): Promise<void>;
   execute(parameters: any[]): Promise<[RowDataPacket[][] | RowDataPacket[] | OkPacket | OkPacket[] | ResultSetHeader, FieldPacket[]]>;
+}
+
+export interface PromisePoolConnection extends Connection {
+  destroy(): any;
 }
