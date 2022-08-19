@@ -42,6 +42,11 @@ declare namespace Pool {
          * If keep-alive is enabled users can supply an initial delay.
          */
         keepAliveInitialDelay?: number;
+
+        /**
+         * Allow DEFAULT value in query.
+         */
+        allowDefault?: Boolean;
     }
 }
 
