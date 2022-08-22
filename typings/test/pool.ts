@@ -12,7 +12,7 @@ portfinder.getPort(async (err: any, port: number) => {
 		database: 'test_database',
 		port: port,
 	} as PoolOptions).promise();
-	
+
 	describe('Pool.promise()', () => {
 
 		it('exposes escape', () => {
